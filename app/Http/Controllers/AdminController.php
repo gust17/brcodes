@@ -34,7 +34,7 @@ class AdminController extends Controller
      *         required=true,
      *         @OA\JsonContent(
      *             required={"name", "email", "password", "role"},
-     *             @OA\Property(property="name", type="string", description="Nome completo do usuário", example="João Silva"),
+     *             @OA\Property(property="name", type="string", description="Nome completo do usuário", example="João torres"),
      *             @OA\Property(property="email", type="string", description="E-mail do usuário", example="joao.silva@example.com"),
      *             @OA\Property(property="password", type="string", description="Senha do usuário", example="password123"),
      *             @OA\Property(property="password_confirmation", type="string", description="Confirmação da senha", example="password123"),

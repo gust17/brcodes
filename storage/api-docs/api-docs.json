@@ -37,7 +37,7 @@
                                     "name": {
                                         "description": "Nome completo do usuário",
                                         "type": "string",
-                                        "example": "João Silva"
+                                        "example": "João torres"
                                     },
                                     "email": {
                                         "description": "E-mail do usuário",
