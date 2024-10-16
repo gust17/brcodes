@@ -1,0 +1,1030 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Administração de Códigos Promocionais",
+        "description": "API para gerenciamento de códigos promocionais.",
+        "termsOfService": "http://seusite.com/terms/",
+        "contact": {
+            "email": "suporte@seusite.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "api/admin/create-user": {
+            "post": {
+                "tags": [
+                    "admin"
+                ],
+                "summary": "Criação de um novo usuário",
+                "description": "Permite que um administrador crie um novo usuário com o tipo definido (competidor, patrocinador ou administrador).",
+                "operationId": "5b9668be6b1cc178e8c4c236caee6fc1",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password",
+                                    "role"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "description": "Nome completo do usuário",
+                                        "type": "string",
+                                        "example": "João Silva"
+                                    },
+                                    "email": {
+                                        "description": "E-mail do usuário",
+                                        "type": "string",
+                                        "example": "joao.silva@example.com"
+                                    },
+                                    "password": {
+                                        "description": "Senha do usuário",
+                                        "type": "string",
+                                        "example": "password123"
+                                    },
+                                    "password_confirmation": {
+                                        "description": "Confirmação da senha",
+                                        "type": "string",
+                                        "example": "password123"
+                                    },
+                                    "role": {
+                                        "description": "Tipo de usuário",
+                                        "type": "string",
+                                        "enum": [
+                                            "competidor",
+                                            "patrocinador",
+                                            "administrador"
+                                        ],
+                                        "example": "competidor"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Usuário criado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Usuário criado com sucesso"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "João Silva"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "joao.silva@example.com"
+                                                },
+                                                "role": {
+                                                    "type": "string",
+                                                    "example": "competidor"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 201
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Erro na validação dos dados",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Erro de validação"
+                                        },
+                                        "errors": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/register": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Registrar um novo competidor",
+                "description": "Rota para registrar um novo usuário como competidor.",
+                "operationId": "8a56853624e025573120a09a4c75d468",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password",
+                                    "password_confirmation"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "John Doe"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "john@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "password"
+                                    },
+                                    "password_confirmation": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Usuário registrado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Usuário registrado com sucesso"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "John Doe"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "john@example.com"
+                                                },
+                                                "role": {
+                                                    "type": "string",
+                                                    "example": "competidor"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Erro de validação",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Erro de validação"
+                                        },
+                                        "errors": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Login do usuário",
+                "description": "Rota para realizar login de um usuário e gerar um token de acesso.",
+                "operationId": "a3b306d14572d1f4bd6c064b3233e7b8",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "example": "john@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login realizado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Login realizado com sucesso"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "access_token": {
+                                                    "type": "string",
+                                                    "example": "1|abc123..."
+                                                },
+                                                "token_type": {
+                                                    "type": "string",
+                                                    "example": "Bearer"
+                                                },
+                                                "user": {
+                                                    "properties": {
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "John Doe"
+                                                        },
+                                                        "email": {
+                                                            "type": "string",
+                                                            "example": "john@example.com"
+                                                        },
+                                                        "role": {
+                                                            "type": "string",
+                                                            "example": "competidor"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Credenciais inválidas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Credenciais inválidas."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/codigos": {
+            "post": {
+                "tags": [
+                    "admin"
+                ],
+                "summary": "Criação de um novo código promocional",
+                "description": "Permite criar um novo código promocional com as informações fornecidas.",
+                "operationId": "81a5c21c2228b1dbac9a8470365fc180",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "pontuacao",
+                                    "resgate_unico"
+                                ],
+                                "properties": {
+                                    "pontuacao": {
+                                        "description": "Pontuação associada ao código promocional",
+                                        "type": "integer",
+                                        "example": 100
+                                    },
+                                    "resgate_unico": {
+                                        "description": "Se o código pode ser resgatado uma única vez",
+                                        "type": "boolean",
+                                        "example": true
+                                    },
+                                    "limite_resgate": {
+                                        "description": "Número máximo de resgates permitidos",
+                                        "type": "integer",
+                                        "example": 5
+                                    },
+                                    "decrescimo": {
+                                        "description": "Se o valor do resgate diminui após cada uso",
+                                        "type": "boolean",
+                                        "example": false
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Código promocional criado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Código promocional criado com sucesso."
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Erro ao criar código promocional",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Erro ao criar código promocional."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/codigos/{codigoPromocional}": {
+            "put": {
+                "tags": [
+                    "admin"
+                ],
+                "summary": "Atualização de código promocional",
+                "description": "Permite atualizar as informações de um código promocional existente.",
+                "operationId": "e067787d1f141b706bb52888d938d387",
+                "parameters": [
+                    {
+                        "name": "codigoPromocional",
+                        "in": "path",
+                        "description": "ID do código promocional a ser atualizado",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "pontuacao",
+                                    "resgate_unico"
+                                ],
+                                "properties": {
+                                    "pontuacao": {
+                                        "description": "Pontuação associada ao código promocional",
+                                        "type": "integer",
+                                        "example": 100
+                                    },
+                                    "resgate_unico": {
+                                        "description": "Se o código pode ser resgatado uma única vez",
+                                        "type": "boolean",
+                                        "example": true
+                                    },
+                                    "limite_resgate": {
+                                        "description": "Número máximo de resgates permitidos",
+                                        "type": "integer",
+                                        "example": 5
+                                    },
+                                    "decrescimo": {
+                                        "description": "Se o valor do resgate diminui após cada uso",
+                                        "type": "boolean",
+                                        "example": false
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Código promocional atualizado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Código promocional atualizado com sucesso."
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Erro ao atualizar código promocional",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Erro ao atualizar código promocional."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "admin"
+                ],
+                "summary": "Exclusão de código promocional",
+                "description": "Realiza a exclusão (soft delete) de um código promocional.",
+                "operationId": "9134196be9841e0422d2456485ca8ab2",
+                "parameters": [
+                    {
+                        "name": "codigoPromocional",
+                        "in": "path",
+                        "description": "ID do código promocional a ser excluído",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Código promocional excluído com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Código promocional excluído com sucesso."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Erro ao excluir código promocional",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Erro ao excluir código promocional."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/codigos": {
+            "get": {
+                "tags": [
+                    "admin"
+                ],
+                "summary": "Listar códigos promocionais",
+                "description": "Retorna a lista de todos os códigos promocionais cadastrados.",
+                "operationId": "33f3c14054ca4e9a2d0b9837397e6cd8",
+                "responses": {
+                    "200": {
+                        "description": "Lista de códigos promocionais retornada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Lista de códigos promocionais."
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/codigos/{codigoPromocional}/resgatavel": {
+            "get": {
+                "tags": [
+                    "admin"
+                ],
+                "summary": "Verificar se o código é resgatável",
+                "description": "Verifica se um código promocional pode ser resgatado.",
+                "operationId": "2713c2748b69947aab97986b7fb8547d",
+                "parameters": [
+                    {
+                        "name": "codigoPromocional",
+                        "in": "path",
+                        "description": "ID do código promocional a ser verificado",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "O código é resgatável",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "O código é resgatável."
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "O código não é mais resgatável",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "O código não é mais resgatável."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/codigos/gerar-multiplos": {
+            "post": {
+                "tags": [
+                    "admin"
+                ],
+                "summary": "Gerar múltiplos códigos promocionais",
+                "description": "Gera vários códigos promocionais de uma vez, com base nos parâmetros fornecidos.",
+                "operationId": "5eaf1f40d22188a7d23716fcd46b1afe",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "quantidade",
+                                    "pontuacao",
+                                    "resgate_unico"
+                                ],
+                                "properties": {
+                                    "quantidade": {
+                                        "description": "Quantidade de códigos a serem gerados",
+                                        "type": "integer",
+                                        "example": 10
+                                    },
+                                    "pontuacao": {
+                                        "description": "Pontuação associada a cada código promocional",
+                                        "type": "integer",
+                                        "example": 100
+                                    },
+                                    "resgate_unico": {
+                                        "description": "Se o código pode ser resgatado apenas uma vez",
+                                        "type": "boolean",
+                                        "example": true
+                                    },
+                                    "limite_resgate": {
+                                        "description": "Número máximo de resgates permitidos",
+                                        "type": "integer",
+                                        "example": 5
+                                    },
+                                    "decrescimo": {
+                                        "description": "Se o valor do resgate diminui após cada uso",
+                                        "type": "boolean",
+                                        "example": false
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Códigos promocionais gerados com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "10 códigos promocionais gerados com sucesso."
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Erro ao gerar códigos promocionais",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Erro ao gerar códigos promocionais."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/codigos/gerar-manual": {
+            "post": {
+                "tags": [
+                    "admin"
+                ],
+                "summary": "Gerar código promocional manualmente",
+                "description": "Permite a criação manual de um código promocional.",
+                "operationId": "d8a4f5fa846066cbac6cc2f319c97b7c",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "codigo",
+                                    "pontuacao",
+                                    "resgate_unico"
+                                ],
+                                "properties": {
+                                    "codigo": {
+                                        "description": "Código promocional manual",
+                                        "type": "string",
+                                        "example": "PROMO2024"
+                                    },
+                                    "pontuacao": {
+                                        "description": "Pontuação associada ao código",
+                                        "type": "integer",
+                                        "example": 100
+                                    },
+                                    "resgate_unico": {
+                                        "description": "Se o código pode ser resgatado uma única vez",
+                                        "type": "boolean",
+                                        "example": true
+                                    },
+                                    "limite_resgate": {
+                                        "description": "Número máximo de resgates permitidos",
+                                        "type": "integer",
+                                        "example": 5
+                                    },
+                                    "decrescimo": {
+                                        "description": "Se o valor do resgate diminui após cada uso",
+                                        "type": "boolean",
+                                        "example": false
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Código promocional gerado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Código gerado com sucesso."
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Erro ao gerar código promocional",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Erro ao gerar código promocional."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/codigos/{codigoPromocional}/resgatar": {
+            "post": {
+                "tags": [
+                    "competidor"
+                ],
+                "summary": "Resgatar um código promocional",
+                "description": "Permite que o competidor resgate um código promocional.",
+                "operationId": "f1f82af7ea83ce86f82eae325c23a24c",
+                "parameters": [
+                    {
+                        "name": "codigoPromocional",
+                        "in": "path",
+                        "description": "Código promocional a ser resgatado",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Código resgatado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Código resgatado com sucesso."
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Erro ao resgatar código promocional",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Erro ao resgatar código promocional."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/competidor/pontuacao": {
+            "get": {
+                "tags": [
+                    "competidor"
+                ],
+                "summary": "Mostrar pontuação do competidor",
+                "description": "Retorna a pontuação total do competidor com base nos resgates realizados.",
+                "operationId": "8aeca47743a38d64a1c119c6c2ec840f",
+                "responses": {
+                    "200": {
+                        "description": "Pontuação total retornada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Pontuação total obtida com sucesso."
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "pontuacao_total": {
+                                                    "type": "integer",
+                                                    "example": 500
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/ranking": {
+            "get": {
+                "tags": [
+                    "admin"
+                ],
+                "summary": "Obter ranking dos competidores",
+                "description": "Retorna os 10 competidores com maior pontuação.",
+                "operationId": "b2d1d2bff178ad6d2caa20abd8aee99d",
+                "responses": {
+                    "200": {
+                        "description": "Ranking dos competidores retornado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Ranking dos competidores."
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "João Silva"
+                                                    },
+                                                    "pontuacao": {
+                                                        "type": "integer",
+                                                        "example": 1500
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 200
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/competidor/codigos-resgatados": {
+            "get": {
+                "tags": [
+                    "Resgates"
+                ],
+                "summary": "Obter códigos resgatados pelo competidor",
+                "description": "Retorna os códigos já resgatados pelo competidor autenticado.",
+                "operationId": "3945a3a526382b76c5b7c66be19b7306",
+                "responses": {
+                    "200": {
+                        "description": "Códigos resgatados retornados com sucesso."
+                    },
+                    "401": {
+                        "description": "Não autorizado"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "sanctum": {
+                "type": "http",
+                "description": "Use a token gerada no login para acessar rotas protegidas.",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "admin",
+            "description": "admin"
+        },
+        {
+            "name": "Auth",
+            "description": "Auth"
+        },
+        {
+            "name": "competidor",
+            "description": "competidor"
+        },
+        {
+            "name": "Resgates",
+            "description": "Resgates"
+        }
+    ]
+}

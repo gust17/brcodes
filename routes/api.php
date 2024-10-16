@@ -12,21 +12,12 @@ use App\Models\User;
 
 
 
-/**
- * @OA\Info(
- *     title="API de Gerenciamento de Códigos Promocionais",
- *     version="1.0.0",
- *     description="Documentação da API de registro de competidores, patrocinadores e administradores.",
- *     @OA\Contact(
- *         email="gustavo@codegus.com"
- *     )
- * )
- */
+
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
- 
+
 Route::post('/register', [AuthController::class, 'register']);
 
 Route::middleware(['auth:sanctum', 'role:administrador'])->group(function () {
