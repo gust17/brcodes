@@ -25,6 +25,7 @@ class AuthController extends Controller
         $this->authService = $authService;
     }
 
+
     /**
      * @OA\Post(
      *     path="/api/register",
@@ -63,6 +64,7 @@ class AuthController extends Controller
      *     )
      * )
      */
+
     public function register(Request $request)
     {
         // Validação dos dados de entrada
@@ -82,6 +84,47 @@ class AuthController extends Controller
             'role' => $user->role,
         ], 201);
     }
+
+    /**
+     * @OA\Post(
+     *     path="/api/login",
+     *     tags={"Auth"},
+     *     summary="Login do usuário",
+     *     description="Rota para realizar login de um usuário e gerar um token de acesso.",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"email", "password"},
+     *             @OA\Property(property="email", type="string", example="john@example.com"),
+     *             @OA\Property(property="password", type="string", format="password", example="password")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Login realizado com sucesso",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Login realizado com sucesso"),
+     *             @OA\Property(property="data", type="object",
+     *                 @OA\Property(property="access_token", type="string", example="1|abc123..."),
+     *                 @OA\Property(property="token_type", type="string", example="Bearer"),
+     *                 @OA\Property(property="user", type="object",
+     *                     @OA\Property(property="name", type="string", example="John Doe"),
+     *                     @OA\Property(property="email", type="string", example="john@example.com"),
+     *                     @OA\Property(property="role", type="string", example="competidor")
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Credenciais inválidas",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Credenciais inválidas.")
+     *         )
+     *     )
+     * )
+     */
+
 
     public function login(Request $request)
     {
