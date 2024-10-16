@@ -21,24 +21,24 @@ class ResgateController extends Controller
      */
     public function getCodigosResgatados(Request $request)
     {
-        // Obtém o competidor autenticado
+
         $competidor = $request->user();
 
-        // Busca os resgates realizados pelo competidor, ordenados pela data de criação
+
         $resgates = Resgate::with('codigoPromocional')
             ->where('user_id', $competidor->id)
-            ->orderBy('created_at', 'desc') // Ordena pelo mais recente
+            ->orderBy('created_at', 'desc')
             ->get();
 
-        // Mapear os resgates com um identificador (ordenador)
+
         $resgatesFormatados = $resgates->map(function ($resgate, $index) {
-            // Mascarar o código (mostrar os 3 primeiros caracteres e ocultar o resto)
+
             $codigoMascarado = substr($resgate->codigoPromocional->codigo, 0, 3) . str_repeat('#', strlen($resgate->codigoPromocional->codigo) - 3);
 
             return [
-                'id' => $index + 1, // Identificador numérico
+                'id' => $index + 1,
                 'codigo' => $codigoMascarado,
-                'data_hora' => $resgate->created_at->format('Y-m-d H:i:s'), // Formato padrão de data/hora
+                'data_hora' => $resgate->created_at->format('Y-m-d H:i:s'), 
             ];
         });
 

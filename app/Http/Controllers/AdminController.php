@@ -36,7 +36,7 @@ class AdminController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
-            'role' => 'required|in:competidor,patrocinador,administrador', // Validação para o tipo de usuário
+            'role' => 'required|in:competidor,patrocinador,administrador',
         ]);
 
         // Criação do usuário
@@ -44,7 +44,7 @@ class AdminController extends Controller
             'name' => $validatedData['name'],
             'email' => $validatedData['email'],
             'password' => Hash::make($validatedData['password']),
-            'role' => $validatedData['role'], // O tipo de usuário é definido pelo administrador
+            'role' => $validatedData['role'],
         ]);
 
         // Retornar resposta de sucesso

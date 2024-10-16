@@ -26,7 +26,7 @@ use App\Models\User;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-
+ 
 Route::post('/register', [AuthController::class, 'register']);
 
 Route::middleware(['auth:sanctum', 'role:administrador'])->group(function () {
